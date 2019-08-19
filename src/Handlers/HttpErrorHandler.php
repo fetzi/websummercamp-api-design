@@ -3,7 +3,6 @@
 namespace App\Handlers;
 
 use App\JsonApi\DocumentFactory;
-use HackerBoy\JsonApi\Document;
 use HackerBoy\JsonApi\Elements\Error;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;

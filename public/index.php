@@ -5,8 +5,12 @@ use App\Handlers\HttpErrorHandler;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use App\JsonApi\DocumentFactory;
+use Illuminate\Database\Capsule\Manager;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::create(__DIR__ . '/../');
+$dotenv->load();
 
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
@@ -25,6 +29,8 @@ $dependencies($containerBuilder);
 
 // Build PHP-DI Container instance
 $container = $containerBuilder->build();
+
+$container->get(Manager::class);
 
 // Instantiate the app
 AppFactory::setContainer($container);

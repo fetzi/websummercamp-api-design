@@ -7,6 +7,7 @@ use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use App\JsonApi\DocumentFactory;
+use Illuminate\Database\Capsule\Manager;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -28,6 +29,17 @@ return function (ContainerBuilder $containerBuilder) {
             $settings = $c->get('settings');
 
             return new DocumentFactory($settings['jsonapi']);
-        }
+        },
+        Manager::class => function (ContainerInterface $c) {
+            $settings = $c->get('settings');
+
+            $manager = new Manager();
+
+            $manager->addConnection($settings['database'], 'default');
+            $manager->setAsGlobal();
+            $manager->bootEloquent();
+
+            return $manager;
+        },
     ]);
 };

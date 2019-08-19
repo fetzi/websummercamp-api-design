@@ -21,6 +21,11 @@ return function (ContainerBuilder $containerBuilder) {
                 ],
                 'api_url' => 'http://localhost:8080',
                 'auto_set_links' => true,
+            ],
+            'database' => [
+                'driver'   => getenv('DB_DRIVER'),
+                'database' => __DIR__ . getenv('DB_DATABASE'),
+                'prefix'   => '',
             ]
         ],
     ]);
