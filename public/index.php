@@ -2,10 +2,15 @@
 declare(strict_types=1);
 
 use App\Handlers\HttpErrorHandler;
+use App\Middlewares\MakeJsonApiRequest;
+use DI\Container;
 use DI\ContainerBuilder;
-use Slim\Factory\AppFactory;
-use App\JsonApi\DocumentFactory;
 use Illuminate\Database\Capsule\Manager;
+use Slim\Factory\AppFactory;
+use Slim\Psr7\Factory\ServerRequestFactory;
+use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
+use WoohooLabs\Yin\JsonApi\JsonApi;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequest;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -38,6 +43,14 @@ $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 $responseFactory = $app->getResponseFactory();
 
+$exceptionFactory = new DefaultExceptionFactory;
+$jsonApiRequest = new JsonApiRequest(ServerRequestFactory::createFromGlobals(), $exceptionFactory);
+
+$container->set(JsonApi::class, new JsonApi(
+	$jsonApiRequest,
+	$responseFactory->createResponse()
+));
+
 // Register middleware
 $middleware = require __DIR__ . '/../app/middleware.php';
 $middleware($app);
@@ -52,9 +65,11 @@ $displayErrorDetails = $container->get('settings')['displayErrorDetails'];
 // Add Routing Middleware
 $app->addRoutingMiddleware();
 
-$documentFactory = $container->get(DocumentFactory::class);
+$app->add(new MakeJsonApiRequest());
+
+$jsonApi = $container->get(JsonApi::class);
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$errorMiddleware->setDefaultErrorHandler(new HttpErrorHandler($callableResolver, $responseFactory, $documentFactory));
+$errorMiddleware->setDefaultErrorHandler(new HttpErrorHandler($callableResolver, $responseFactory, $jsonApi));
 
 $app->run();

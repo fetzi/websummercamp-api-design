@@ -2,47 +2,44 @@
 
 namespace App\Handlers;
 
-use App\JsonApi\DocumentFactory;
-use HackerBoy\JsonApi\Elements\Error;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Handlers\ErrorHandler;
 use Slim\Interfaces\CallableResolverInterface;
+use WoohooLabs\Yin\JsonApi\JsonApi;
+use WoohooLabs\Yin\JsonApi\Schema\Document\ErrorDocument;
+use WoohooLabs\Yin\JsonApi\Schema\Error\Error;
 
 class HttpErrorHandler extends ErrorHandler
 {
     /**
-     * @var DocumentFactory
+     * @var JsonApi
      */
-    private $documentFactory;
+    private $jsonApi;
 
     public function __construct(
         CallableResolverInterface $callableResolver,
         ResponseFactoryInterface $responseFactory,
-        DocumentFactory $documentFactory
+        JsonApi $jsonApi
     ) {
         parent::__construct($callableResolver, $responseFactory);
 
-        $this->documentFactory = $documentFactory;
+        $this->jsonApi = $jsonApi;
     }
 
     protected function respond(): ResponseInterface
     {
-        $document = $this->documentFactory->create();
+        $code = $this->exception->getCode();
 
-        $error = new Error([
-            'id' => uniqid(),
-            'status' => $this->exception->getCode(),
-            'code' => $this->exception->getCode(),
-            'title' => $this->exception->getMessage(),
-        ], $document);
+        if ($code === 0) {
+            $code = 500;
+        }
 
-        $document->setErrors($error);
+        $error = Error::create()
+            ->setCode($code)
+            ->setStatus($code)
+            ->setTitle($this->exception->getMessage());
 
-        $response = $this->responseFactory->createResponse($this->exception->getCode())
-            ->withHeader('Content-Type', 'application/vnd.api+json');
-        $response->getBody()->write($document->toJson());
-
-        return $response;
+        return $this->jsonApi->respond()->genericError(new ErrorDocument([$error]));
     }
 }

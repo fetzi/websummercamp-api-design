@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0ee6d49f5c97de43c97659bc9a97296",
+    "content-hash": "332edf354b8f698d3697675eea415aae",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -122,42 +122,6 @@
                 "response"
             ],
             "time": "2018-11-19T16:19:58+00:00"
-        },
-        {
-            "name": "hackerboy/json-api",
-            "version": "1.2.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hackerboydotcom/json-api.git",
-                "reference": "34a08f4e7a5222123ed128e77c505e555d983545"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hackerboydotcom/json-api/zipball/34a08f4e7a5222123ed128e77c505e555d983545",
-                "reference": "34a08f4e7a5222123ed128e77c505e555d983545",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "HackerBoy\\JsonApi\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "HackerBoy.com",
-                    "email": "admin@hackerboy.com"
-                }
-            ],
-            "description": "PHP JSON API implementation (server side)",
-            "time": "2019-08-17T15:27:22+00:00"
         },
         {
             "name": "illuminate/container",
@@ -1825,6 +1789,127 @@
                 "environment"
             ],
             "time": "2019-06-15T22:40:20+00:00"
+        },
+        {
+            "name": "woohoolabs/yin",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/woohoolabs/yin.git",
+                "reference": "8f6f790a4922a09376890aa11369ac803e1abe2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/woohoolabs/yin/zipball/8f6f790a4922a09376890aa11369ac803e1abe2b",
+                "reference": "8f6f790a4922a09376890aa11369ac803e1abe2b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.0",
+                "psr/http-message-implementation": "^1.0.0"
+            },
+            "require-dev": {
+                "justinrainbow/json-schema": "^5.2.0",
+                "phpstan/phpstan": "^0.11.0",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
+                "phpunit/phpunit": "^7.0.0",
+                "seld/jsonlint": "^1.7.0",
+                "squizlabs/php_codesniffer": "^3.4.0",
+                "woohoolabs/coding-standard": "^1.0.0",
+                "woohoolabs/releaser": "^1.1",
+                "zendframework/zend-diactoros": "^2.0.0",
+                "zendframework/zend-httphandlerrunner": "^1.0.0"
+            },
+            "suggest": {
+                "justinrainbow/json-schema": "Allows to validate the request and response body against the JSON API schema",
+                "seld/jsonlint": "Allows to lint the request and response body"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WoohooLabs\\Yin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Máté Kocsis",
+                    "email": "kocsismate@woohoolabs.com"
+                }
+            ],
+            "description": "Woohoo Labs. Yin",
+            "keywords": [
+                "Woohoo Labs.",
+                "Yin",
+                "json api",
+                "psr-7"
+            ],
+            "time": "2019-06-05T11:40:40+00:00"
+        },
+        {
+            "name": "woohoolabs/yin-middleware",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/woohoolabs/yin-middleware.git",
+                "reference": "6484f9e21f673c3b3a089fd451412dd79c7d68a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/woohoolabs/yin-middleware/zipball/6484f9e21f673c3b3a089fd451412dd79c7d68a7",
+                "reference": "6484f9e21f673c3b3a089fd451412dd79c7d68a7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.0",
+                "psr/container": "^1.0.0",
+                "psr/http-message-implementation": "^1.0.0",
+                "psr/http-server-middleware": "^1.0.0",
+                "woohoolabs/yin": "^4.0.0"
+            },
+            "replace": {
+                "woohoolabs/yin-middlewares": "self.version"
+            },
+            "require-dev": {
+                "justinrainbow/json-schema": "^5.2.0",
+                "phpstan/phpstan": "^0.11.0",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
+                "phpunit/phpunit": "^7.0.0",
+                "seld/jsonlint": "^1.4.0",
+                "squizlabs/php_codesniffer": "^3.4.0",
+                "woohoolabs/coding-standard": "^1.0.0",
+                "woohoolabs/releaser": "^1.1",
+                "zendframework/zend-diactoros": "^2.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WoohooLabs\\YinMiddleware\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Máté Kocsis",
+                    "email": "kocsismate@woohoolabs.com"
+                }
+            ],
+            "description": "Woohoo Labs. Yin Middleware",
+            "keywords": [
+                "Woohoo Labs.",
+                "Yin",
+                "json api",
+                "middleware",
+                "psr-15",
+                "psr-7"
+            ],
+            "time": "2019-04-19T10:23:31+00:00"
         }
     ],
     "packages-dev": [

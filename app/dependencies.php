@@ -1,13 +1,16 @@
 <?php
 
+use App\JsonApi\DocumentFactory;
 use DI\ContainerBuilder;
+use Illuminate\Database\Capsule\Manager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use App\JsonApi\DocumentFactory;
-use Illuminate\Database\Capsule\Manager;
+use Slim\Factory\ServerRequestCreatorFactory;
+use Slim\Psr7\Factory\ResponseFactory;
+use WoohooLabs\Yin\JsonApi\JsonApi;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -25,11 +28,6 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
-        DocumentFactory::class => function (ContainerInterface $c) {
-            $settings = $c->get('settings');
-
-            return new DocumentFactory($settings['jsonapi']);
-        },
         Manager::class => function (ContainerInterface $c) {
             $settings = $c->get('settings');
 
@@ -40,6 +38,6 @@ return function (ContainerBuilder $containerBuilder) {
             $manager->bootEloquent();
 
             return $manager;
-        },
+        }
     ]);
 };
