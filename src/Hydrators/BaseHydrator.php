@@ -11,7 +11,7 @@ abstract class BaseHydrator extends AbstractHydrator
     /**
      * @inheritdoc
      */
-    protected function getRelationshipHydrator($book): array
+    protected function getRelationshipHydrator($resource): array
     {
         return [];
     }
