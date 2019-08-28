@@ -3,25 +3,42 @@ declare(strict_types=1);
 
 namespace Tests;
 
+use App\Handlers\HttpErrorHandler;
+use App\Middlewares\MakeJsonApiRequest;
 use DI\ContainerBuilder;
+use Dotenv\Dotenv;
 use Exception;
+use Illuminate\Database\Capsule\Manager;
 use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Factory\AppFactory;
+use Slim\Psr7\Factory\ServerRequestFactory;
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Headers;
 use Slim\Psr7\Request as SlimRequest;
 use Slim\Psr7\Uri;
+use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
+use WoohooLabs\Yin\JsonApi\JsonApi;
+use WoohooLabs\Yin\JsonApi\Request\JsonApiRequest;
 
 class TestCase extends PHPUnit_TestCase
 {
+    protected function setUp()
+    {
+        exec('composer db:migrate && composer db:seed');
+    }
+
     /**
      * @return App
      * @throws Exception
      */
     protected function getAppInstance(): App
     {
+        $dotenv = Dotenv::create(__DIR__ . '/../');
+        $dotenv->load();
+
         // Instantiate PHP-DI ContainerBuilder
         $containerBuilder = new ContainerBuilder();
 
@@ -35,16 +52,23 @@ class TestCase extends PHPUnit_TestCase
         $dependencies = require __DIR__ . '/../app/dependencies.php';
         $dependencies($containerBuilder);
 
-        // Set up repositories
-        $repositories = require __DIR__ . '/../app/repositories.php';
-        $repositories($containerBuilder);
-
         // Build PHP-DI Container instance
         $container = $containerBuilder->build();
+        $container->get(Manager::class);
 
         // Instantiate the app
         AppFactory::setContainer($container);
         $app = AppFactory::create();
+        $callableResolver = $app->getCallableResolver();
+        $responseFactory = $app->getResponseFactory();
+
+        $exceptionFactory = new DefaultExceptionFactory;
+        $jsonApiRequest = new JsonApiRequest(ServerRequestFactory::createFromGlobals(), $exceptionFactory);
+
+        $container->set(JsonApi::class, new JsonApi(
+            $jsonApiRequest,
+            $responseFactory->createResponse()
+        ));
 
         // Register middleware
         $middleware = require __DIR__ . '/../app/middleware.php';
@@ -53,6 +77,17 @@ class TestCase extends PHPUnit_TestCase
         // Register routes
         $routes = require __DIR__ . '/../app/routes.php';
         $routes($app);
+
+
+        // Add Routing Middleware
+        $app->addRoutingMiddleware();
+
+        $app->add(new MakeJsonApiRequest());
+
+        $jsonApi = $container->get(JsonApi::class);
+
+        $errorMiddleware = $app->addErrorMiddleware(false, false, false);
+        $errorMiddleware->setDefaultErrorHandler(new HttpErrorHandler($callableResolver, $responseFactory, $jsonApi));
 
         return $app;
     }
@@ -82,5 +117,15 @@ class TestCase extends PHPUnit_TestCase
         }
 
         return new SlimRequest($method, $uri, $h, $serverParams, $cookies, $stream);
+    }
+
+    public function assertJsonBodyEquals(string $expectedFile, ResponseInterface $response)
+    {
+        $expected = json_decode(file_get_contents($expectedFile), true);
+
+        $response->getBody()->rewind();
+        $actual = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals($expected, $actual);
     }
 }

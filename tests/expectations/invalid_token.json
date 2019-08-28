@@ -1,0 +1,9 @@
+{
+    "errors": [
+        {
+            "status": "401",
+            "code": "401",
+            "title": "Invalid API token given"
+        }
+    ]
+}
