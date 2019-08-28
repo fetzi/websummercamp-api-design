@@ -34,3 +34,10 @@ In addition the value of the API token should be passed on to the route handler 
 
 **Helpful links:**
 * [Slim Middlewares](https://www.slimframework.com/docs/v4/concepts/middleware.html)
+
+## Exercise 3 - JSON:API Responses
+
+In this exercise we will focus on implementing the json:api format for the `/products` endpoint.
+
+**Helpful links:**
+* [Yin Framework](https://github.com/woohoolabs/yin)
