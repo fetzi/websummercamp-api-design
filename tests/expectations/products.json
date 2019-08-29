@@ -1,0 +1,55 @@
+{
+    "jsonapi": {
+        "version": "1.1"
+    },
+    "data": [
+        {
+            "type": "product",
+            "id": "1",
+            "attributes": {
+                "name": "Product 1",
+                "price": 1000
+            },
+            "relationships": {
+                "product-group": {
+                    "data": {
+                        "type": "product-group",
+                        "id": "1"
+                    }
+                }
+            }
+        },
+        {
+            "type": "product",
+            "id": "2",
+            "attributes": {
+                "name": "Product 2",
+                "price": 2000
+            },
+            "relationships": {
+                "product-group": {
+                    "data": {
+                        "type": "product-group",
+                        "id": "1"
+                    }
+                }
+            }
+        },
+        {
+            "type": "product",
+            "id": "3",
+            "attributes": {
+                "name": "Product 3",
+                "price": 3000
+            },
+            "relationships": {
+                "product-group": {
+                    "data": {
+                        "type": "product-group",
+                        "id": "1"
+                    }
+                }
+            }
+        }
+    ]
+}

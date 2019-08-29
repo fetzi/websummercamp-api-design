@@ -42,3 +42,34 @@ In this exercise we will focus on implementing the json:api format for the `/pro
 **Helpful links:**
 * [json:api Specification](https://jsonapi.org/format/)
 * [Yin Framework](https://github.com/woohoolabs/yin)
+
+## Exercise 4 - JSON:API response for products
+
+In this exercise we will focus on the `/products` resource. The goal is to implement the getAll (`/products`) and the getOne (`/products/{id}`) endpoints. The product resource(s) should be formatted in the json:api format and should include the `product-group` relation.
+
+```json
+{
+    "jsonapi": {
+        "version": "1.1"
+    },
+    "data": {
+        "type": "product",
+        "id": "1",
+        "attributes": {
+            "name": "Product 1",
+            "price": 1000
+        },
+        "relationships": {
+            "product-group": {
+                "data": {
+                    "type": "product-group",
+                    "id": "1"
+                }
+            }
+        }
+    }
+}
+```
+
+**Helpful links:**
+* [Yin relationships](https://github.com/woohoolabs/yin#resources)
