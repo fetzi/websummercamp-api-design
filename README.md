@@ -6,6 +6,13 @@
 composer install
 ```
 
+## Migrating and seeding the database
+
+```
+composer db:migrate
+composer db:seed
+```
+
 ## Starting the API
 
 ```
