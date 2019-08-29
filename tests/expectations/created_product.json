@@ -1,0 +1,21 @@
+{
+    "jsonapi": {
+        "version": "1.1"
+    },
+    "data": {
+        "type": "product",
+        "id": "4",
+        "attributes": {
+            "name": "Product 10",
+            "price": 1000
+        },
+        "relationships": {
+            "product-group": {
+                "data": {
+                    "type": "product-group",
+                    "id": "1"
+                }
+            }
+        }
+    }
+}

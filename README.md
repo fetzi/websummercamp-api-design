@@ -73,3 +73,10 @@ In this exercise we will focus on the `/products` resource. The goal is to imple
 
 **Helpful links:**
 * [Yin relationships](https://github.com/woohoolabs/yin#resources)
+
+## Exercise 5 - Hydrators
+
+This exercise will cover json:api hydrators which are used for creating and updating resource objects. At first we will implement the `POST` endpoint for products to create new products and then we will implement the `PATCH` endpoint to update resource data and its relationships.
+
+**Helpful links:**
+- [Yin hydrators](https://github.com/woohoolabs/yin#hydrators)

@@ -12,12 +12,14 @@ use Illuminate\Database\Capsule\Manager;
 use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\StreamInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Psr7\Factory\ServerRequestFactory;
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Headers;
 use Slim\Psr7\Request as SlimRequest;
+use Slim\Psr7\Stream;
 use Slim\Psr7\Uri;
 use WoohooLabs\Yin\JsonApi\Exception\DefaultExceptionFactory;
 use WoohooLabs\Yin\JsonApi\JsonApi;
@@ -127,5 +129,10 @@ class TestCase extends PHPUnit_TestCase
         $actual = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals($expected, $actual);
+    }
+
+    protected function createStream($filePath) : StreamInterface
+    {
+        return new Stream(fopen($filePath, 'r'));
     }
 }
