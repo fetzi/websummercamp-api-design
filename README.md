@@ -37,7 +37,8 @@ In addition the value of the API token should be passed on to the route handler 
 
 ## Exercise 3 - JSON:API Responses
 
-In this exercise we will focus on implementing the json:api format for the `/products` endpoint.
+In this exercise we will focus on implementing the json:api format for the `/product-group` endpoint.
 
 **Helpful links:**
+* [json:api Specification](https://jsonapi.org/format/)
 * [Yin Framework](https://github.com/woohoolabs/yin)

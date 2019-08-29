@@ -27,7 +27,7 @@ class TestCase extends PHPUnit_TestCase
 {
     protected function setUp()
     {
-        exec('composer db:migrate && composer db:seed');
+        exec('php setup/migrations.php && php setup/seeds.php');
     }
 
     /**

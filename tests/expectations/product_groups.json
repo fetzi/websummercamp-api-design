@@ -1,0 +1,28 @@
+{
+    "jsonapi": {
+        "version": "1.1"
+    },
+    "data": [
+        {
+            "type": "product-group",
+            "id": "1",
+            "attributes": {
+                "name": "Group 1"
+            }
+        },
+        {
+            "type": "product-group",
+            "id": "2",
+            "attributes": {
+                "name": "Group 2"
+            }
+        },
+        {
+            "type": "product-group",
+            "id": "3",
+            "attributes": {
+                "name": "Group 3"
+            }
+        }
+    ]
+}
