@@ -25,3 +25,4 @@ To make sure everything is working out correctly, you need to access the followi
 
 * [Slim Framework](https://www.slimframework.com/docs/v4/)
 * [Laravel Eloquent](https://laravel.com/docs/5.8/eloquent)
+* [Slides](https://speakerdeck.com/fetzi/battle-tested-api-design)
